@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
 
 on:
@@ -18,14 +17,17 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install flask frozen-flask
+        pip install flask frozen-flask transformers
+        pip freeze > requirements.txt  # Optional: creates a requirements file
         
     - name: Build static site
       run: |
-        python app.py  # Your script that uses Frozen-Flask
+        python -c "from flask_frozen import Freezer; from app import app; freezer = Freezer(app); freezer.freeze()"
+        # Or if you have a specific build script:
+        # python build.py
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build  # Where Frozen-Flask outputs files
+        publish_dir: ./build
