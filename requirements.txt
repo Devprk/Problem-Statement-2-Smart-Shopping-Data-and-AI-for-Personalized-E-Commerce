@@ -1,8 +1,11 @@
-Flask
-scikit-learn
-transformers
-langgraph
-torch
-diffusers
-accelerate
-gunicorn
+flask==2.3.2
+scikit-learn==1.3.2
+transformers==4.30.1
+langgraph==0.0.5
+torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
+diffusers==0.19.3
+accelerate==0.21.0
+gunicorn==20.1.0
+sentencepiece==0.1.99
+protobuf==3.20.3
+frozen-flask==0.18
