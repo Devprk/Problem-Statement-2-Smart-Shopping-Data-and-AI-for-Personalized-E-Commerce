@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy AI Application
 
 on:
   push:
@@ -7,22 +7,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increased timeout for large model downloads
-    
+    timeout-minutes: 60  # Increased timeout for model downloads
+
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Set up Python
+
+    - name: Set up Python 3.10  # Using 3.10 for better compatibility
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
-        
+        python-version: '3.10'
+
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libopenblas-dev libgomp1
-        
-    - name: Cache PyTorch and model weights
+        sudo apt-get install -y libopenblas-dev libgomp1 ffmpeg libsm6 libxext6
+
+    - name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: |
@@ -30,20 +30,14 @@ jobs:
           ~/.cache/torch
           ~/.cache/huggingface
         key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-        
+
     - name: Install Python dependencies
       run: |
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install accelerate -U  # Ensure latest accelerate
-        
-    - name: Build static site
+        python -m pip install --upgrade pip
+        pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cpu
+        pip install -r requirements.txt --no-cache-dir
+        pip install --force-reinstall "huggingface-hub==0.22.2"  # Ensure correct version
+
+    - name: Run application
       run: |
         python app.py
-        
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
-        keep_files: true
