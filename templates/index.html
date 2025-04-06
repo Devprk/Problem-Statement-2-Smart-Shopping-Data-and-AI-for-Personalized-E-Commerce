@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">Welcome to Smart Shop!</h1>
+      <p class="hero-subtitle">Discover products tailored just for you</p>
+      <p class="hero-description">Enter your Customer ID to get personalized recommendations handpicked based on your shopping preferences.</p>
+      
+      <form method="POST" class="recommendation-form">
+        <div class="input-group">
+          <input 
+            type="text" 
+            name="customer_id" 
+            placeholder="e.g., C1000 or C10999" 
+            required
+            pattern="[Cc]\d{1,9}"
+            title="Please enter a valid Customer ID starting with C followed by 4-9 digits (e.g., C1000 or C1099999)"
+            class="form-input"
+          >
+          <button type="submit" class="cta-button">
+            Get Recommendations
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <p class="form-note">Don't know your ID? Contact customer support for assistance.</p>
+      </form>
+    </div>
+    
+    <div class="hero-image">
+      <img src="{{ url_for('static', filename='images/Shopping Delivery GIF by Express One.gif') }}" alt="Happy shopping experience">
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .hero-description {
+    color: #4a5568;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .recommendation-form {
+    max-width: 500px;
+  }
+  
+  .input-group {
+    display: flex;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .form-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .cta-button {
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #3182ce;
+  }
+  
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
+  }
+  
+  .form-note {
+    margin-top: 0.75rem;
+    color: #718096;
+    font-size: 0.875rem;
+  }
+  
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 2rem;
+    }
+    
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    
+    .input-group {
+      flex-direction: column;
+      box-shadow: none;
+    }
+    
+    .form-input {
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .cta-button {
+      border-radius: 0.5rem;
+      justify-content: center;
+      padding: 1rem;
+    }
+  }
+</style>
+{% endblock %}
