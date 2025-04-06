@@ -9,3 +9,4 @@ gunicorn==21.2.0
 sentencepiece==0.2.0
 protobuf==4.25.3
 frozen-flask==0.18
+huggingface-hub==0.22.2  # Specific compatible version
