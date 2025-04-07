@@ -1,3 +1,28 @@
+name: Web Build + Deployment to GitHub Pages 
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  BUILD_NUMBER: 1
+  BUILD_VERSION: 1.0.0
+  PYTHON_VERSION: 3.12.8
+  FLET_CLI_VERSION: 0.27.5
+  PYTHONUTF8: 1
+  FLET_CLI_NO_RICH_OUTPUT: 1
+  UV_NO_PROGRESS: 1
+
+jobs:
   build:
     runs-on: ubuntu-latest
 
@@ -24,10 +49,33 @@
     - name: Flet Build Web
       run: |
         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
-        flet build web --base-url ${GITHUB_REPOSITORY#*/} --route-url-strategy hash
+        flet build web --module-name your_module_name --base-url ${GITHUB_REPOSITORY#*/} --route-url-strategy hash
 
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
       with:
         name: web-build-artifact
         path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Deploy to GitHub Pages 🚀
+      if: github.event_name == 'push'
+      id: deployment
+      uses: actions/deploy-pages@v4.0.5
+      with:
+        artifact_name: web-build-artifact
