@@ -1,4 +1,4 @@
-Flask
+Flask==3.0.3
 scikit-learn==1.3.2
 transformers
 langgraph
@@ -8,4 +8,4 @@ torch==2.1.2
 diffusers
 accelerate
 gunicorn
-flet==0.24.0.dev3216
+
