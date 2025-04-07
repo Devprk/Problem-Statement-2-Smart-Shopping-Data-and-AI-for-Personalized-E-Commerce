@@ -8,3 +8,4 @@ torch==2.1.2
 diffusers
 accelerate
 gunicorn
+flet==0.24.0.dev3216
