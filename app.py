@@ -15,5 +15,6 @@ def recommendations(customer_id):
     return render_template("recommendations.html", customer_id=customer_id, recs=recs)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=7860, debug=False)
-
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
