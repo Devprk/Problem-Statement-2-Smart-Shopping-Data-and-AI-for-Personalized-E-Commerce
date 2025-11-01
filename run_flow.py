@@ -4,7 +4,15 @@ from agents.product_matching_agent import ProductMatchingAgent
 from agents.llm_explanation_agent import LLMExplanationAgent
 from agents.image_generation_agent import ImageGenerationAgent
 
-DB_PATH = "smart_shopping.db"
+import shutil
+import os
+
+db_source = "smart_shopping.db"
+db_dest = "/tmp/smart_shopping.db"
+if not os.path.exists(db_dest):
+    shutil.copy(db_source, db_dest)
+
+DB_PATH = db_dest
 IMAGE_FOLDER = "static/images"
 import re
 
