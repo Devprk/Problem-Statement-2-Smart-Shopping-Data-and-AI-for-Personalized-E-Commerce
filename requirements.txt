@@ -3,7 +3,7 @@ gunicorn==23.0.0
 scikit-learn
 transformers
 langgraph
-torch==2.1.2+cpu
+torch
 --extra-index-url https://download.pytorch.org/whl/cpu
 diffusers
 accelerate
